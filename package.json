@@ -1,0 +1,21 @@
+{
+  "name": "hetic_chat",
+  "version": "1.0.0",
+  "description": "Mise en place d'une application de chat (chatbot)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DWS-paris/HETIC_chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DWS-paris/HETIC_chat/issues"
+  },
+  "homepage": "https://github.com/DWS-paris/HETIC_chat#readme"
+}
