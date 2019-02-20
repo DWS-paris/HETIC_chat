@@ -5,7 +5,7 @@
     - pass x 2
     - cgu
 -->
-<form action="">
+<form action="#">
     <label for="email">Email</label>
     <input type="email" name="email" id="email" required minlength="5">
 
@@ -23,3 +23,17 @@
 
     <button type="submit">Inscription</button>
 </form>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Capter la soumissionn du formulaire
+        document.querySelector('form').addEventListener('submit', (event) => {
+            // Bloquer le comportement naturel du formulaire
+            event.preventDefault();
+
+            console.log('submit');
+        })
+    });
+
+</script>
