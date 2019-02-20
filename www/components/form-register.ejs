@@ -5,7 +5,7 @@
     - pass x 2
     - cgu
 -->
-<form action="#">
+<form action="#" id="form">
     <label for="email">Email</label>
     <input type="email" name="email" id="email" required minlength="5">
 
@@ -52,7 +52,17 @@
 
             // Validation finale
             if( formError === 0 ){
-                console.log('Well done');
+                let form = new FormData(document.querySelector('#form'));
+                console.log(form)
+                // Requête Fetch sur l'API
+                fetch('/api/register', {
+                    method: 'POST',
+                    body: JSON.stringify({email: email.value, password: password.value, pseudo: pseudo.value}),
+                    headers: {'Accept': 'application/json' , 'Content-Type': 'application/json' }
+                })
+                .then( rawData => rawData.json() )
+                .then( jsonData => console.log(jsonData) )
+                .catch( err => console.error(err))
             };
 
         });

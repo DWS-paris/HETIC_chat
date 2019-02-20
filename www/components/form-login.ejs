@@ -1,0 +1,46 @@
+<!-- 
+    Faire un formulaire d'inscription
+    - email
+    - pseudo
+    - pass x 2
+    - cgu
+-->
+<form action="#">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required minlength="5">
+
+    <label for="password">Mot de passe</label>
+    <input type="password" name="password" id="password" required minlength="5">
+
+    <button type="submit">Connexion</button>
+</form>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Variables
+        const email = document.querySelector('#email');
+        const password = document.querySelector('#password');
+
+        // Capter la soumissionn du formulaire
+        document.querySelector('form').addEventListener('submit', (event) => {
+            // Bloquer le comportement naturel du formulaire
+            event.preventDefault();
+
+            // Variable 
+            let formError = 0;
+
+            // Vérifier les champs du formulaire
+            if( email.value.length <= 4 ) formError++;
+            if( password.value.length <= 4 ) formError++;
+
+            // Validation finale
+            if( formError === 0 ){
+                console.log('Well done');
+            };
+
+        });
+    });
+
+</script>
