@@ -17,8 +17,7 @@ Cofiguration
 
             router.post('/register', (req, res) => {
                 // Récupérer les données de l'utilisateurs
-                console.log(req.body)
-                res.json('register');
+                res.json(req.body);
             });
 
             router.post('/login', (req, res) => {
