@@ -1,0 +1,25 @@
+<!-- 
+    Faire un formulaire d'inscription
+    - email
+    - pseudo
+    - pass x 2
+    - cgu
+-->
+<form action="">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required minlength="5">
+
+    <label for="pseudo">Pseudo</label>
+    <input type="text" name="pseudo" id="pseudo" required minlength="2">
+
+    <label for="password">Mot de passe</label>
+    <input type="password" name="password" id="password" required minlength="5">
+
+    <label for="password-secure">Répéter le mot de passe</label>
+    <input type="password" name="password-secure" id="password-secure" required minlength="5">
+
+    <label for="conditions">Accepter les <a href="#">CGU</a></label>
+    <input type="checkbox" name="conditions" id="conditions" required>
+
+    <button type="submit">Inscription</button>
+</form>
