@@ -24,7 +24,7 @@
             
             // Pouch/Couch configuration
             const innerDBuser = new PouchDB('inner-user');
-            const remoteDB = `http://127.0.0.1:5984/hetic-user`;
+            const remoteDBuser = `http://127.0.0.1:5984/hetic-user`;
 
             // DB sync
             innerDBuser.changes({
@@ -33,9 +33,9 @@
             }).on( `change`, data => console.log(data) );
 
             // Initialise a sync with the remote server
-            if (remoteDB) {
-                innerDBuser.replicate.to(remoteDB, { live : true }, console.log('Sync to remote is active'));
-                innerDBuser.replicate.from(remoteDB, { live : true }, console.log('Sync from remote is active'));
+            if (remoteDBuser) {
+                innerDBuser.replicate.to(remoteDBuser, { live : true }, console.log('Sync to remote is active'));
+                innerDBuser.replicate.from(remoteDBuser, { live : true }, console.log('Sync from remote is active'));
             };
         </script>
     </head>

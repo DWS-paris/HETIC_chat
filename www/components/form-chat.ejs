@@ -1,0 +1,99 @@
+<section id="chatRoom">
+
+</section>
+
+<form action="#" id="chatForm">
+    <label for="message">Tapez votrre message</label>
+    <textarea name="message" id="message" required minlength="1"></textarea>
+
+    <button type="submit">Envoyer</button>
+</form>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Pouch/Couch configuration
+        const innerDBchat = new PouchDB('inner-chat');
+        const remoteDBchat = `http://127.0.0.1:5984/hetic-chat`;
+
+        // Créer une fonction pour afficher les message CouchDB dans le DOM
+        const displayMessage = (data) => {
+            innerDBchat.allDocs( { include_docs: true, descending: true }, (err, data) => {
+                if(!err){
+                    // Vider le DOM
+                    chatRoom.innerHTML = '';
+
+                    // Faire une boucle sur data.rows pour afficher les messages
+                    for( let item of data.rows ){
+                        // Ajouter le message dans le DOM
+                        if( item.doc.user === 'Julien Noyer' ){
+                            chatRoom.innerHTML += `
+                                <article class="myMessage">
+                                    <p>${item.doc.content}</p>
+                                    <em>${item.doc.user}</em>
+                                </article>
+                            `
+                        } else{
+                            chatRoom.innerHTML += `
+                                <article>
+                                    <p>${item.doc.content}</p>
+                                    <em>${item.doc.user}</em>
+                                </article>
+                            `
+                        }
+
+                        
+                    }
+                }
+            })
+        };
+
+        // DB sync
+        innerDBchat.changes({
+            since: `now`,
+            live: true
+        }).on( `change`, displayMessage );
+
+        // Initialise a sync with the remote server
+        if (remoteDBchat) {
+            innerDBchat.replicate.to(remoteDBchat, { live : true }, displayMessage);
+            innerDBchat.replicate.from(remoteDBchat, { live : true }, displayMessage);
+        };
+
+        // Définition des variables
+        const chatRoom = document.querySelector('#chatRoom');
+        const chatForm = document.querySelector('#chatForm');
+        const message = document.querySelector('#message');
+
+        // Methode : capter la soumission du formulaire
+        const formSubmit = () => {
+            // Capter la soumission du formulaire
+            chatForm.addEventListener( 'submit', (event) => {
+                // Bloquer le comportement naturel du formulaire
+                event.preventDefault();
+
+                // Vérifier le champs message
+                if( message.value.length >= 1 ){
+                    // Enregistrer le message en pouchDB
+                    innerDBchat.put({
+                        _id: makeid(),
+                        content: message.value,
+                        user: 'Julien Noyer'
+
+                    }, (err, data) => {
+                        if(err){
+                            console.error(err)
+                        }
+                        else{
+                            console.log(data)
+                        }
+                    })
+                }
+            })
+        }
+
+        // Start IHM
+        formSubmit();
+    });
+
+</script>
