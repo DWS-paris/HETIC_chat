@@ -8,6 +8,36 @@
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"> 
         <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css"> 
         <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+
+        <script src="//cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js"></script>
+        <script>
+            // Function to define random _id
+            const makeid = () => {
+                let _id = "";
+                const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                for (let i = 0; i < 15; i++)
+                    _id += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                return _id;
+            }
+            
+            // Pouch/Couch configuration
+            const innerDBuser = new PouchDB('inner-user');
+            const remoteDB = `http://127.0.0.1:5984/hetic-user`;
+
+            // DB sync
+            innerDBuser.changes({
+                since: `now`,
+                live: true
+            }).on( `change`, data => console.log(data) );
+
+            // Initialise a sync with the remote server
+            if (remoteDB) {
+                innerDBuser.replicate.to(remoteDB, { live : true }, console.log('Sync to remote is active'));
+                innerDBuser.replicate.from(remoteDB, { live : true }, console.log('Sync from remote is active'));
+            };
+        </script>
     </head>
     <body>
         <header>

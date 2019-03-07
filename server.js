@@ -30,7 +30,7 @@ Configuration
             server.set( 'view engine', 'ejs' );
 
             // Body-parser
-            server.use(bodyParser.urlencoded({ extended: true }))
+            server.use(bodyParser.urlencoded({ extended: false }))
 
             // Configurer les routes
             server.use('/', mainRouter);

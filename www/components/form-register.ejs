@@ -23,11 +23,11 @@
 
     <button type="submit">Inscription</button>
 </form>
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script>
-
     document.addEventListener('DOMContentLoaded', () => {
-
         // Variables
         const email = document.querySelector('#email');
         const pseudo = document.querySelector('#pseudo');
@@ -53,20 +53,23 @@
             // Validation finale
             if( formError === 0 ){
                 let form = new FormData(document.querySelector('#form'));
-            
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/register',
-                    data: { email:email.value, password:password.value, pseudo: pseudo.value },
 
-                    success: function(data) {
-                        console.log(data)
-                    },
+                // Ajouter un document dans la base PouchDB
+                innerDBuser.put({
+                    _id: makeid(),
+                    email: email.value,
+                    password: password.value,
+                    pseudo: pseudo.value
 
-                    error: function(err) {
-                        console.error(err)
+                }, ( err, data )=> {
+                    if(err){
+                        console.error(err);
                     }
+                    else{
+                        console.log(data);
+                    };
                 })
+                
             };
 
         });
