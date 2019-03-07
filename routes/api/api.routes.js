@@ -17,7 +17,6 @@ Cofiguration
             })
 
             router.post('/register', (req, res) => {
-
                 console.log(req.body)
                 // Vérifier les données de la requête
                 if(
@@ -25,17 +24,8 @@ Cofiguration
                     req.body.password != undefined && req.body.password.length > 4 &&
                     req.body.pseudo != undefined && req.body.pseudo.length > 1
                 ){
-                    // Configuration des données
-                    const userData = JSON.stringify(req.body);
-
-                    // Enregistrer les données dans la BDD  
-                    fetch('http://localhost:3000/users', {
-                        method: 'POST',
-                        body: userData,
-                        headers: { 'Content-Type': 'application/json' }
-                    })
-                    .then( newUser => res.json( { msg: 'User registrated', data: newUser } ) )
-                    .catch( error => res.json( { msg: 'User not registrated', data: error } ) );
+                    // TODO: add data to CouchDB
+                    return res.json(req.body);
                 }
                 else{
                     res.json({ msg: 'Bad fields provided' });
